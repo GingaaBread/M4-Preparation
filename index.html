@@ -45,10 +45,30 @@
         let sound = true, inMenu = true
         let questionSound = new Audio('Question.mp3');
 
-        const questions = [
-            "What do Eagleton/Terry say about the definition of literature as 'imaginative' writing in the sense of fiction?",
-            "According to Eagleton/Terry: Who are the 'Formalists'?"
-        ]
+        // Since I'm way too lazy to use an API, here you go:
+        const questions = {
+            "literary" : [
+                "What do Eagleton/Terry say about the definition of literature as 'imaginative' writing in the sense of fiction?",
+                "According to Eagleton/Terry: Who are the 'Formalists'?",
+                "Identify the love plots in Oscar Wilde's 'The Importance of Being Earnest' and elaborate on how they relate to one another.",
+                "What kind of comedy do you think is Wilde's 'The Importance of Being Earnest'?",
+                "What does Alice Munro's ‘Boys and Girls’ have to say about gender roles?",
+                "Define narrator and point of view in Alice Munro's ‘Boys and Girls’, and the effect they have on the tale and its meaning.",
+                "Discuss whether 'A High Wind in Jamaica' is an initiation journey.",
+                "What does 'A High Wind in Jamaica' have to say about the nature of children?",
+                "How does 'The Lord of the Flies' relate to the genre of the children’s adventure novel?",
+                "What does 'The Lord of the Flies' have to say on human nature?",
+                "How does the speaker in Charles Sorley's ‘To Germany’ describe the relation between Great Britain and Germany?",
+                "What view does the speaker in Wilfred Owen's ‘Anthem for Doomed Youth’ have of dying in the war?",
+                "What kind of comedy is 'A Midsummer Night's Dream'? Identify the love plots and elaborate on how they are developed.",
+                "Elaborate how Sorley uses blindness as a governing metaphor in 'To Germany'."
+            ],
+            "cultural" : [
+                "Describe Foucault's concept of heterotopias in your own words. What types of heterotopias are there?",
+                "Discuss Matthew Arnold's definition of 'Culture'."
+            ]                
+        }
+
         const colours = ["#27ae60", "#16a085", "#2980b9", "#f39c12", "#d35400", "#c0392b"]
         const fgColours = ["#2ecc71", "#1abc9c", "#3498db", "#f1c40f", "#e67e22", "#e74c3c"]
         const linkColours = ["#f1c40f", "#f1c40f", "#f1c40f", "#2c3e50", "#2c3e50", "#2c3e50"]
@@ -57,6 +77,7 @@
         const questionPanel = document.getElementById("question-panel")
         const question = document.getElementById("question")
         const soundToggleButton = document.getElementById("sound-toggle-button")
+        const selectedFilter = document.getElementById("filter")
 
         document.getElementById("start-button").addEventListener("click", () => {
             menu.classList.add("animate__fadeOut")
@@ -71,7 +92,44 @@
         soundToggleButton.addEventListener("animationend", () => soundToggleButton.classList.remove("animate__rubberBand"))
 
         function loadQuestion() {
-            question.innerText = questions[Math.floor(Math.random() * questions.length)]
+            let index = 0;
+            if (questions.literary.length === 0 && selectedFilter.value == "Filter: Literary Studies"
+            ||  questions.cultural.length === 0 && selectedFilter.value == "Filter: Cultural Studies"
+            ||  questions.literary.length === 0 && questions.cultural.length === 0) {
+                    question.innerText = "All prompts finished! :)"
+            }
+            else if (selectedFilter.value == "Filter: Literary Studies" && questions.literary.length !== 0) {
+                index = Math.floor(Math.random() * questions.literary.length)
+                question.innerText = questions.literary[index]
+                questions.literary.splice(index, 1)
+            }
+            else if (selectedFilter.value == "Filter: Cultural Studies" && questions.cultural.length !== 0) {
+                index = Math.floor(Math.random() * questions.cultural.length)
+                question.innerText = questions.cultural[index]
+                questions.cultural.splice(index, 1)
+            }
+            else {
+                if (questions.literary.length === 0) {
+                    index = Math.floor(Math.random() * questions.cultural.length)
+                    question.innerText = questions.cultural[index]
+                    questions.cultural.splice(index, 1)         
+                } else if (questions.cultural.length === 0) {
+                    index = Math.floor(Math.random() * questions.literary.length)
+                    question.innerText = questions.literary[index]
+                    questions.literary.splice(index, 1) 
+                } else   { 
+                    if (Math.random() > .5) {
+                        index = Math.floor(Math.random() * questions.cultural.length)
+                        question.innerText = questions.cultural[index]
+                        questions.cultural.splice(index, 1)
+                    } else { 
+                        index = Math.floor(Math.random() * questions.literary.length)
+                        question.innerText = questions.literary[index]
+                        questions.literary.splice(index, 1)   
+                    }
+                }
+            }
+
             let randomIndex = Math.floor(Math.random() * colours.length)
             document.body.style.background = colours[randomIndex]
             question.style.background = fgColours[randomIndex]
