@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body class="centered">
-    <header>
+    <header id="options-header" class="hidden" aria-hidden="true">
         <div class="wrapper">
             <button id="back-button">&larr; Back</button>
         </div>
@@ -78,9 +78,12 @@
         const question = document.getElementById("question")
         const soundToggleButton = document.getElementById("sound-toggle-button")
         const selectedFilter = document.getElementById("filter")
+        const optionsHeader = document.getElementById("options-header")
 
         document.getElementById("start-button").addEventListener("click", () => {
             menu.classList.add("animate__fadeOut")
+            optionsHeader.ariaHidden = false
+            optionsHeader.classList.remove("hidden")
             inMenu = false   
         })
         document.getElementById("question-button").addEventListener("click", () => loadQuestion())

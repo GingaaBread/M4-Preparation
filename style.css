@@ -1,20 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100;0,400;0,700;1,100;1,400&display=swap');
 
-.centered {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
-
-.hidden {
-    display: none;
-}
-
-.animate__fadeOut {
-    --animate-duration: .5s;
-}
-
 body {
     height: 100vh;
     margin: 0;
@@ -40,6 +25,7 @@ em {
 #question-button:focus-visible {
     box-shadow: inset 20rem 0 0 0 #ecf0f1;
     color: #9b59b6;
+    outline: 0;
 }
 
 h1 {
@@ -66,6 +52,12 @@ main p {
 a {
     color: #f1c40f;
     text-decoration: none;
+}
+
+a:focus-within {
+    outline: 0;
+    padding: 0 0 .3rem 0;
+    border-bottom: 1px solid black;
 }
 
 main button {
@@ -146,11 +138,21 @@ select {
     cursor: pointer;
 }
 
+select:focus-within {
+    outline: .3rem solid #f1c40f;
+}
+
 header button {
     border: none;
     cursor: pointer;
     padding: 0;
     font-weight: bold;
+}
+
+header button:focus-within {
+    outline: 0;
+    border-bottom: 1px solid #2c3e50;
+    padding: .4rem 0;
 }
 
 #back-button {
@@ -217,4 +219,19 @@ footer {
         font-size: 2rem;
         text-shadow: 0px 1.5px black;
     }
+}
+
+.centered {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.hidden {
+    display: none;
+}
+
+.animate__fadeOut {
+    --animate-duration: .5s;
 }
